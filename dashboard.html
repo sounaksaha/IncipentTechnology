@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key= 
+    AIzaSyB2bXKNDezDf6YNVc-SauobynNHPo4RJb8&callback=initMap"></script>
+    <link rel="stylesheet" href="dashboard.css">
+
+</head>
+<body>
+    <div id="dashboard">
+        <div id="sidebar">
+            <button id="downloadButton">Download User Details</button>
+        </div>
+        <div id="content">
+            <div id="map"></div>
+        </div>
+    </div>
+
+   <!-- ... Your existing HTML ... -->
+
+<script>
+    function initMap() {
+        const myLatLng = { lat: -25.363, lng: 131.044 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 4,
+            center: myLatLng,
+        });
+
+        new google.maps.Marker({
+            position: myLatLng,
+            map,
+            title: "Hello World!",
+        });
+    }
+
+    function downloadUserDetails() {
+        fetch('path-to-your-php-file.php')
+            .then(response => response.json())
+            .then(userDetails => {
+                const blob = new Blob([JSON.stringify(userDetails)], { type: 'application/json' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'user_details.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => console.error('Error fetching user details:', error));
+    }
+
+    document.getElementById("downloadButton").addEventListener("click", downloadUserDetails);
+</script>
+</body>
+</html>
+
+    
+    
+</body>
+</html>
